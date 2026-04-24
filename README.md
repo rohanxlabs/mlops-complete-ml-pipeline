@@ -1,6 +1,3 @@
-# mlops-complete-ml-pipeline
-https://mlops-complete-ml-pipeline.onrender.com
-
 🚀 End-to-End MLOps Pipeline
 
 ⚡ Production-Grade Machine Learning System
