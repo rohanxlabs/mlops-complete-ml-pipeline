@@ -205,3 +205,23 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ---------------------------------------------------------------------------
+# MLOps / project-specific
+# ---------------------------------------------------------------------------
+
+# MLflow tracking artifacts
+mlflow.db
+mlruns/
+mlartifacts/
+
+# DVC internal cache and temp files
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+
+# Generated pipeline artifacts (managed by the DVC pipeline)
+# Uncomment if these are tracked by DVC rather than git:
+# data/raw.csv
+# data/processed.csv
+# models/*.pkl
