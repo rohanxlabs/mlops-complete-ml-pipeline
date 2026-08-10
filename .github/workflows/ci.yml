@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    name: Install · Lint · Pipeline · Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout ─────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Python setup ─────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ── Dependencies ─────────────────────────────────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Lint ─────────────────────────────────────────────────────────────────
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check src/ api/ tests/ --ignore E501
+
+      # ── Pipeline ─────────────────────────────────────────────────────────────
+      - name: Run pipeline
+        run: |
+          python src/data_ingestion.py
+          python src/data_validation.py
+          python src/data_preprocessing.py
+          python src/train.py
+          python src/evaluate.py
+
+      # ── Tests ─────────────────────────────────────────────────────────────────
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
